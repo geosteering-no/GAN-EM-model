@@ -1,0 +1,17 @@
+[project]
+name = "GAN-EM-model"
+version = "0.0.1"
+authors = [
+  { name="Kristian Fossum", email="krfo@norceresearch.no" },
+]
+description = "Coupled neural networks for mapping latent vector to EM log"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+  "numpy",
+  "scipy",
+  "torch",
+  "torchvision",
+  "scikit-image",
+  "pyvista"
+]
