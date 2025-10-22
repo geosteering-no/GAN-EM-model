@@ -1,4 +1,4 @@
-# Coupled neural network for Geosteering 
+# Coupled neural network simulator for geosteering 
 
 Contains
  1. GAN for mapping from latent vectors to facies
