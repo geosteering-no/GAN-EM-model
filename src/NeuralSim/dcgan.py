@@ -52,6 +52,10 @@ class DCGAN_D(nn.Module):
 
 
 class DCGAN_G(nn.Module):
+    """
+    This GAN class is consistent with Alyaev et al. 2021 paper https://arxiv.org/abs/2207.01374
+    The only difference is the inplace parameter of the nn.ReLU(inplace=False) which should not be a breaking change
+    """
     def __init__(self, isize, nz, nc, ngf, ngpu, n_extra_layers=0):
         super(DCGAN_G, self).__init__()
         self.ngpu = ngpu
