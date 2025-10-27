@@ -11,8 +11,17 @@ from . import image_to_log
 from . import vector_to_image
 
 class FullModel:
-    def __init__(self, latent_size, gan_save_file, proxi_input_shape, proxi_output_shape, proxi_save_file,
-                 proxi_scalers=None, gan_output_height=64, num_img_channels=6, device='cpu', gan_correct_orientation=False):
+    def __init__(self,
+                 latent_size,
+                 gan_save_file,
+                 proxi_input_shape,
+                 proxi_output_shape,
+                 proxi_save_file,
+                 proxi_scalers=None,
+                 gan_output_height=64,
+                 num_img_channels=6,
+                 device='cpu',
+                 gan_correct_orientation=False):
 
         if proxi_scalers is None:
             # error

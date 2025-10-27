@@ -14,11 +14,15 @@ from PIL import Image, ImageOps
 import random
 
 
-
-
-
 class GanEvaluator:
-    def __init__(self, load_file_name, vec_size, output_size=64, number_chanels=6, device='cpu', num_gpus=0):
+    def __init__(self,
+                 load_file_name: str,
+                 vec_size,
+                 output_size=64,
+                 number_chanels=6,
+                 device='cpu',
+                 num_gpus=0
+                 ):
         """
 
         """
@@ -103,6 +107,7 @@ class GanEvaluator:
         if to_one_hot:
             one_hot = torch.nn.functional.one_hot(torch.argmax(x_fake[:,0:3,:,:], dim=1), num_classes=3).float()
             one_hot = one_hot.permute(0, 3, 1, 2)  # back to [B, 3, H, W]
+
             one_hot_output = torch.cat([one_hot, x_fake[:, 3:, :, :]], dim=1)
             # return one_hot_output
 
