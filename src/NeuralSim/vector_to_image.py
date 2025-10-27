@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import requests
+from safetensors.torch import load_file, load
 
 from . import dcgan
 from . import utils as myutils
@@ -40,9 +42,23 @@ class GanEvaluator:
         netG.apply(myutils.weights_init)
         print('Loading GAN from {}'.format(load_file_name))
         if 'https://' in load_file_name:
-            netG.load_state_dict(torch.hub.load_state_dict_from_url(load_file_name, map_location=device))
+            if ".safetensors" in load_file_name:
+                #TODO: check if we can have the file type check in a more generic way
+                response = requests.get(load_file_name)
+                response.raise_for_status()
+                state_dict = load(response.content)
+                netG.load_state_dict(state_dict)
+                netG.to(device)
+            else:
+                netG.load_state_dict(torch.hub.load_state_dict_from_url(load_file_name, map_location=device))
         else:
-            netG.load_state_dict(torch.load(load_file_name, map_location=device))
+            if ".safetensors" in load_file_name:
+                state_dict = load_file(load_file_name)  # loads on CPU
+                netG.load_state_dict(state_dict)
+                netG.to(device)
+            else:
+                netG.load_state_dict(torch.load(load_file_name, map_location=device))
+
         netG.eval()
         netG.requires_grad_(False)
 

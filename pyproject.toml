@@ -13,5 +13,6 @@ dependencies = [
   "torch",
   "torchvision",
   "scikit-image",
-  "pyvista"
+  "pyvista",
+  "safetensors"
 ]
