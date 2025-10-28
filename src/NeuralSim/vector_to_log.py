@@ -76,14 +76,18 @@ class FullModel:
 
         return resistivity_padded_flat
 
+    def eval_gan(self, input_latent_ensemble, to_one_hot=True):
+        gan_result = self.gan_evaluator.eval(input_latent_ensemble=input_latent_ensemble, to_one_hot=True)
+        if self.gan_correct_orientation:
+            gan_output = gan_output.permute(0,1,3,2)
+        return gan_result
+
     def forward(self, x, index_vector, output_transien_results=False):
         """
         the output is flattened in batch and width dimensions
         """
         # Generate image from latent vector
-        gan_output = self.gan_evaluator.eval(input_latent_ensemble=x, to_one_hot=True)
-        if self.gan_correct_orientation:
-            gan_output = gan_output.permute(0,1,3,2)
+        gan_output = self.eval_gan(input_latent_ensemble=x, to_one_hot=True)
 
         resistivity_padded = self.convert_to_resistivity_format(gan_output, index_vector)
 
