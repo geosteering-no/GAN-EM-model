@@ -10,6 +10,7 @@ from .image_to_log import set_global_seed
 from . import image_to_log
 from . import vector_to_image
 
+# todo inherite from torch
 class FullModel:
     def __init__(self,
                  latent_size,
