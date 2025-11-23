@@ -41,7 +41,7 @@ class FullModel:
         self.pad_bottom = (proxi_input_shape[1] - gan_output_height) - self.pad_top
 
         self.rh_mult  = torch.tensor([4, 171, 55, 0, 0, 0], dtype=torch.float32).to(device).view(1, -1, 1, 1)
-        self.rv_mult = torch.tensor([4*5, 171*2, 55, 0, 0, 0], dtype=torch.float32).to(device).view(1, -1, 1, 1)
+        self.rv_mult = torch.tensor([4*3, 171, 85, 0, 0, 0], dtype=torch.float32).to(device).view(1, -1, 1, 1)
 
         # Initialize EM model
         self.proxi_input_shape = proxi_input_shape
