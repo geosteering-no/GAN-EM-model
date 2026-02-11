@@ -43,6 +43,8 @@ class FullModel:
         self.rh_mult  = torch.tensor([4, 171, 55, 0, 0, 0], dtype=torch.float32).to(device).view(1, -1, 1, 1)
         self.rv_mult = torch.tensor([4*3, 171, 85, 0, 0, 0], dtype=torch.float32).to(device).view(1, -1, 1, 1)
 
+        # todo add an option for dirrect EM sampling model here
+        # self.em_model = image_to_log.EMPointModel...
         # Initialize EM model
         self.proxi_input_shape = proxi_input_shape
         self.em_model = image_to_log.EMProxy(proxi_input_shape, proxi_output_shape,
