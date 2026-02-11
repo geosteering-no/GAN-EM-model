@@ -9,6 +9,39 @@ from udar_proxi.model_scaler import MinMaxScaler
 from udar_proxi.mymodel import EMConvModel
 
 
+class EMPointModel:
+    def __init__(self, input_shape, output_shape):
+        self.input_shape = input_shape
+        self.output_shape = output_shape
+
+    def to(self, device):
+        pass
+
+    def image_and_index_to_log(self, column_input, tool_index):
+        """
+        column_input: should be of shape [Batch/columns, 2 channels, column_heilght]. That is [B, c, H]
+        tool_index: should be of shape [Batch/columns]. That is [B]
+        """
+
+        output = column_input[:,:,tool_index]
+
+        return output
+
+    def image_to_log(self, column_input_tensor_with_one_hot):
+        x = column_input_tensor_with_one_hot
+
+        index_vec = x[:, 2, :]
+        idx = index_vec.argmax(dim=1)
+        # make an enumerated vector for batch dim
+        batch_idx = torch.arange(x.size(0), device=x.device)
+        val_ch0 = x[batch_idx, 0, idx]
+        val_ch1 = x[batch_idx, 1, idx]
+
+        output = torch.stack([val_ch0, val_ch1], dim=1)  # [B, 2]
+
+        return output
+
+
 class EMProxy(EMConvModel):
     def __init__(self, input_shape, output_shape, checkpoint_path=None, device='cpu', scaler=None):
         super(EMProxy, self).__init__(input_shape, output_shape)
@@ -57,7 +90,7 @@ class EMProxy(EMConvModel):
     def image_to_log(self, column_input_tensor):
         #scaling
         scaled_input = self.scaler.scale_input(column_input_tensor)
-        output =  self.forward(scaled_input)
+        output = self.forward(scaled_input)
         scaled_output = self.scaler.unscale_output(output)
 
         return scaled_output
