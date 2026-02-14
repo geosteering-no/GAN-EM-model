@@ -22,7 +22,9 @@ class FullModel:
                  gan_output_height=64,
                  num_img_channels=6,
                  device='cpu',
-                 gan_correct_orientation=False):
+                 gan_correct_orientation=False,
+                 direct_em_model=False
+                 ):
 
         if proxi_scalers is None:
             # error
@@ -47,7 +49,10 @@ class FullModel:
         # self.em_model = image_to_log.EMPointModel...
         # Initialize EM model
         self.proxi_input_shape = proxi_input_shape
-        self.em_model = image_to_log.EMProxy(proxi_input_shape, proxi_output_shape,
+        if direct_em_model:
+            self.em_model = image_to_log.EMPointModel(proxi_input_shape, proxi_output_shape)
+        else:
+            self.em_model = image_to_log.EMProxy(proxi_input_shape, proxi_output_shape,
                                              checkpoint_path=proxi_save_file, scaler=proxi_scalers).to(device)
 
         # in case the model needs to be put in the eval mode

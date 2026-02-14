@@ -17,6 +17,12 @@ class EMPointModel:
     def to(self, device):
         pass
 
+    def eval(self):
+        pass
+
+    def requires_grad_(self, requires_grad):
+        pass
+
     def image_and_index_to_log(self, column_input, tool_index):
         """
         column_input: should be of shape [Batch/columns, 2 channels, column_heilght]. That is [B, c, H]
